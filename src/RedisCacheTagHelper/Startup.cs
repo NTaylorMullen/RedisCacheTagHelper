@@ -1,29 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+﻿using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
+using Microsoft.Dnx.Runtime;
+using Microsoft.Framework.Caching.Redis;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
+using Microsoft.Framework.OptionsModel;
 
 namespace RedisCacheTagHelper
 {
     public class Startup
     {
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(appEnv.ApplicationBasePath)
+                .AddJsonFile("appsettings.json");
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets();
+            }
+
+            builder.AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public IConfigurationRoot Configuration { get; private set; }
+
+        public void ConfigureServices(IServiceCollection services)
         {
-            // Add the platform handler to the request pipeline.
+            services.AddRedisCache();
+            services.AddSingleton<IOptions<RedisCacheOptions>>(_ => new RedisCacheOptions
+            {
+                Configuration = Configuration["Data:DefaultRedisConfiguration"],
+                InstanceName = "RedisCacheTagHelperSample"
+            });
+            services.AddMvc();
+        }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
             app.UseIISPlatformHandler();
 
-            app.Run(async (context) =>
+            if (env.IsDevelopment())
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

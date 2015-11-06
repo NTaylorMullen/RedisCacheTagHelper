@@ -1,0 +1,25 @@
+﻿<redis-cache>
+    <p>The current time (in ticks): @DateTime.Now.Ticks.</p>
+    <p><em>The above time stamp should never change.</em></p>
+</redis-cache>
+
+<br />
+
+<redis-cache absolute-expiration="DateTime.Now + TimeSpan.FromSeconds(5)">
+    <p>The current time (in ticks): @DateTime.Now.Ticks.</p>
+    <p><em>The above time stamp should change every 5 seconds.</em></p>
+</redis-cache>
+
+<br />
+
+<redis-cache relative-absolute-expiration="TimeSpan.FromSeconds(7)">
+    <p>The current time (in ticks): @DateTime.Now.Ticks.</p>
+    <p><em>The above time stamp should change every 7 seconds.</em></p>
+</redis-cache>
+
+<br />
+
+<redis-cache sliding-expiration="TimeSpan.FromSeconds(10)">
+    <p>The current time (in ticks): @DateTime.Now.Ticks.</p>
+    <p><em>The above time stamp should change every 10 seconds IF not requested again within 10 seconds (sliding window).</em></p>
+</redis-cache>
