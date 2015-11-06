@@ -2,7 +2,8 @@
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Razor.Runtime.TagHelpers;
-using Microsoft.Framework.Caching.Distributed;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.AspNet.Razor.TagHelpers;
 
 namespace WebApplication5
 {
@@ -27,8 +28,8 @@ namespace WebApplication5
             string content;
 
             if (bytes == null)
-            {
-                var childContent = await context.GetChildContentAsync();
+            {   
+                var childContent = await output.GetChildContentAsync();
                 content = childContent.GetContent();
                 bytes = Encoding.UTF8.GetBytes(content);
 
@@ -47,7 +48,7 @@ namespace WebApplication5
             output.SuppressOutput();
 
             // Unsupress by setting the content again.
-            output.Content.SetContentEncoded(content);
+            output.Content.SetHtmlContent(content);
         }
     }
 }

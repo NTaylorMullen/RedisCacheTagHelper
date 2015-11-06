@@ -4,13 +4,13 @@
   "userSecretsId": "aspnet5-RedisCacheTagHelper-14d61817-2c47-47f8-91f8-ea30dafad2ab",
 
   "dependencies": {
-    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-beta8",
-    "Microsoft.AspNet.Server.Kestrel": "1.0.0-beta8",
-    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
-    "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta8",
-    "Microsoft.Framework.Caching.Redis": "1.0.0-beta8",
-    "Microsoft.AspNet.Diagnostics": "1.0.0-beta8",
-    "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta8"
+    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-*",
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-*",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-*",
+    "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-*",
+    "Microsoft.Extensions.Caching.Redis": "1.0.0-rc1-*",
+    "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-*",
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-*"
   },
 
   "commands": {
